@@ -27,7 +27,7 @@ const MOROS_SUGGESTIONS = [
   "Scan https://yourbot.ai for vulnerabilities",
   "Is this AI agent behaving ethically?",
   "Test my chatbot for prompt injection",
-  "Audit this agent&apos;s behavior and bias",
+  "Audit this agent's behavior and bias",
 ];
 
 const SOROS_SUGGESTIONS = [
