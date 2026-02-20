@@ -75,6 +75,8 @@ export default function ChatInterface({ initialTab = "moros" }: ChatInterfacePro
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const idCounterRef = useRef(0);
+  const nextId = () => (++idCounterRef.current).toString();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -85,7 +87,7 @@ export default function ChatInterface({ initialTab = "moros" }: ChatInterfacePro
     if (!messageText || isTyping) return;
 
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: nextId(),
       role: "user",
       content: messageText,
       agent: activeTab,
@@ -95,13 +97,13 @@ export default function ChatInterface({ initialTab = "moros" }: ChatInterfacePro
     setInput("");
     setIsTyping(true);
 
-    const delay = 900 + Math.random() * 700;
+    const delay = 1200;
     await new Promise((r) => setTimeout(r, delay));
 
     const { text: responseText, escalate } = getAIResponse(messageText, activeTab);
 
     const aiMsg: Message = {
-      id: (Date.now() + 1).toString(),
+      id: nextId(),
       role: "ai",
       content: responseText,
       agent: activeTab,
@@ -117,7 +119,7 @@ export default function ChatInterface({ initialTab = "moros" }: ChatInterfacePro
 
       await new Promise((r) => setTimeout(r, 1200));
       const sorosMsg: Message = {
-        id: (Date.now() + 2).toString(),
+        id: nextId(),
         role: "ai",
         content: SOROS_RESPONSES.default,
         agent: "soros",
